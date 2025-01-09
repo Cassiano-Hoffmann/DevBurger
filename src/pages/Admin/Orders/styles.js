@@ -1,36 +1,30 @@
-import ReactSelect from 'react-select';
-
 import styled from 'styled-components';
+import Select from 'react-select';
 
-export const Container = styled.div`
-    background: #EFEFEF;
-    min-height: 100vh;
+export const ProductImage = styled.img`
+    height: 80px;
+    padding: 12px;
+    border-radius: 16px;
 `;
 
-export const ProductsImg = styled.img`
-    width: 60px;
-    border-radius: 5px;
-    `;
+export const SelectStatus = styled(Select)`
+    width: 240px;
+`;
 
-export const ReactSelectStyle = styled(ReactSelect)`
-    width: 250px;
-    
-    .css-13cymwt-control {
-        cursor: pointer;
-    }
-    `;
-
-export const Menu = styled.div`
+export const Filter = styled.div`
     display: flex;
-    gap: 50px;
     justify-content: center;
-    margin: 20px 0;
+    margin: 28px 0;
+    gap: 50px;
 `;
 
-export const LinkMenu = styled.a`
-    color: #323D5D;
+export const FilterOption = styled.button`
     cursor: pointer;
-    font-weight: ${props => (props.$isActiveStatus ? 'bold' : '400')};
-    border-bottom: ${props => (props.$isActiveStatus ? '2px solid #9758A6' : 'none')};
+    background: none;
+    border: none;
+    color: ${(props) => props.$isActiveStatus ? props.theme.purple : props.theme.darkGray};
+    border-bottom: ${(props) => props.$isActiveStatus ? `2px solid ${props.theme.purple}` : 'none'};
+    font-size: 18px;
+    line-height: 20px;
     padding-bottom: 5px;
 `;

@@ -3,7 +3,7 @@ import { Image } from '@phosphor-icons/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { api } from '../../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -24,34 +24,21 @@ const schema = yup
   .object({
     name: yup.string().required('Digite o nome do produto'),
     price: yup
-      .number()
-      .positive()
-      .required('Digite o preço do produto')
-      .typeError('Digite o preço do produto'),
+    .number()
+    .positive()
+    .required('Digite o preço do produto')
+    .typeError('Digite o preço do produto'),
     category: yup.object().required('Escolha a categoria'),
     offer: yup.bool(),
-    file: yup
-      .mixed()
-      .test('required', 'Escolha um arquivo para continuar', (value) => {
-        return value && value.length > 0;
-      })
-      .test('fileSize', 'Carregue arquivos até 3mb', (value) => {
-        return value && value.length > 0 && value[0].size <= 30000;
-      })
-      .test('type', 'Carregue apenas imagens PNG ou JPEG', (value) => {
-        return (
-          value &&
-          value.length > 0 &&
-          (value[0].type === 'image/jpeg' || value[0].type === 'image/png')
-        );
-      }),
   });
 
-export function NewProduct() {
+export function EditProduct() {
   const [fileName, setFileName] = useState(null);
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
+
+  const { state: { product } } = useLocation();
 
   useEffect(() => {
     async function loadCategories() {
@@ -80,14 +67,14 @@ export function NewProduct() {
     productFormData.append('file', data.file[0]);
     productFormData.append('offer', data.offer);
 
-    await toast.promise(api.post('/products', productFormData), {
-      pending: 'Adicionando o produto...',
-      success: 'Produto criado com sucesso',
-      error: 'Falha ao adicionar o produto, tente novamente',
+    await toast.promise( api.put(`/products/${product.id}`, productFormData), {
+      pending: 'Editando o produto...',
+      success: 'Produto editado com sucesso',
+      error: 'Falha ao editar o produto, tente novamente',
     });
 
     setTimeout(() => {
-      navigate('/admin/produtos');
+        navigate('/admin/produtos');
     }, 2000);
   };
 
@@ -96,13 +83,13 @@ export function NewProduct() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup>
           <Label>Nome</Label>
-          <Input type="text" {...register('name')} />
+          <Input type="text" {...register('name')} defaultValue={product.name} />
           <ErrorMessage>{errors?.name?.message}</ErrorMessage>
         </InputGroup>
 
         <InputGroup>
           <Label>Preço</Label>
-          <Input type="number" {...register('price')} />
+          <Input type="number" {...register('price')} defaultValue={product.price / 100} />
           <ErrorMessage>{errors?.price?.message}</ErrorMessage>
         </InputGroup>
 
@@ -129,6 +116,7 @@ export function NewProduct() {
           <Controller
             name="category"
             control={control}
+            defaultValue={product.category}
             render={({ field }) => (
               <Select
                 {...field}
@@ -137,6 +125,7 @@ export function NewProduct() {
                 getOptionValue={(category) => category.id}
                 placeholder='Categorias'
                 menuPortalTarget={document.body}
+                defaultValue={product.category}
               />
             )}
           />
@@ -145,13 +134,17 @@ export function NewProduct() {
         </InputGroup>
 
         <InputGroup>
-          <ContainerCheckbox>
-            <input type="checkbox" {...register('offer')} />
-            <Label>Produto em Oferta?</Label>
-          </ContainerCheckbox>
+            <ContainerCheckbox>
+                <input 
+                    type="checkbox" 
+                    defaultChecked={product.offer} 
+                    {...register('offer')} 
+                />
+                <Label>Produto em Oferta?</Label>
+            </ContainerCheckbox>
         </InputGroup>
 
-        <SubmitButton>Adicionar Produto</SubmitButton>
+        <SubmitButton>Editar Produto</SubmitButton>
       </Form>
     </Container>
   );

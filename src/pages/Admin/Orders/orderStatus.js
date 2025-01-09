@@ -1,6 +1,6 @@
-const status = [
-    {
-        id: 1,
+export const orderStatusOptions = [
+    { 
+        id: 0,
         label: 'Todos',
         value: 'Todos'
     },
@@ -29,6 +29,4 @@ const status = [
         label: 'Entregue',
         value: 'Entregue'
     },
-]
-
-export default status
+];

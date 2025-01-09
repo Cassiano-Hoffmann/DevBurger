@@ -27,7 +27,7 @@ export const Container = styled.div `
 export const Title = styled.h2 `
     font-size: 32px;
     font-weight: 800;
-    color: #61A120;
+    color: ${(props) => props.theme.green};
     padding-bottom: 12px;
     position: relative;
     text-align: center;
@@ -39,7 +39,7 @@ export const Title = styled.h2 `
         bottom: 0;
         width: 56px;
         height: 4px;
-        background-color: #61A120;
+        background-color: ${(props) => props.theme.green};
         left: calc(50% - 28px);
     }
 `;

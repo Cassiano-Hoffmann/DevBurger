@@ -39,14 +39,14 @@ export function Header() {
                 </Navigation>
                 <Options>
                     <Profile>
-                        <User color='#FFF' size={24} />
+                        <User color='${(props) => props.theme.white}' size={24} />
                         <div>
                             <p>Olá, <span>{userInfo.name}</span></p>
                             <Logout onClick={logoutUser}>Sair</Logout>
                         </div>
                     </Profile>
                     <LinkContainer>
-                        <ShoppingCart color='#FFF' size={24} />
+                        <ShoppingCart color='${(props) => props.theme.white}' size={24} />
                         <HeaderLink to="/carrinho">Carrinho</HeaderLink>
                     </LinkContainer>
                 </Options>

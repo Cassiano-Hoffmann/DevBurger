@@ -18,6 +18,6 @@ export function CardProduct({ product }) {
     );
 }
 
-CardProduct.propType = {
-    product: PropTypes.object,
+CardProduct.propTypes = {
+    product: PropTypes.object.isRequired,
 };

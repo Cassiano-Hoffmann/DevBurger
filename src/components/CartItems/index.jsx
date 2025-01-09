@@ -30,8 +30,8 @@ export function CartItems() {
             </Table.Header>
             <Table.Body>
                 {cartProducts?.length ? (
-                    cartProducts.map(product => (
-                        <Table.Tr key={product.id}>
+                    cartProducts.map((product, index) => (
+                        <Table.Tr key={`${product.id}-${index}`}>
                             <Table.Td>
                                 <ProductImage src={product.url} />
                             </Table.Td>
@@ -50,12 +50,17 @@ export function CartItems() {
                                 </ProductTotalPrice>
                             </Table.Td>
                             <Table.Td>
-                                <TrashImage src={TrashIcon} alt="lixeira" onClick={() => deleteProduct(product.id)} />
+                                <TrashImage 
+                                    src={TrashIcon} 
+                                    alt="lixeira" 
+                                    onClick={() => deleteProduct(product.id)} 
+                                />
                             </Table.Td>
                         </Table.Tr>
                     ))
-                ) : <EmptyCart>Carrinho Vazio</EmptyCart>
-                }
+                ) : (
+                    <EmptyCart>Carrinho Vazio</EmptyCart>
+                )}
             </Table.Body>
         </Table.Root>
     );

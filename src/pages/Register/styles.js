@@ -36,10 +36,10 @@ export const RightContainer = styled.div`
     max-width: 50%;
     background: url('${Background}');
     background-size: 200%;
-    background-color: #363636;
+    background-color: ${(props) => props.theme.black};
 
     p {
-        color: #FFF;
+        color: ${(props) => props.theme.white};
         font-size: 18px;
         font-weight: 800;
 
@@ -50,10 +50,10 @@ export const RightContainer = styled.div`
 `;
 
 export const Title = styled.h2`
-    font-family: 'Road Rage', sans-serif;
+    font-family: ${(props) => props.theme.roadRageFont};
     text-align: center;
     font-size: 40px;
-    color: #9758A6;
+    color: ${(props) => props.theme.purple};
 `;
 
 export const Form = styled.form`
@@ -82,13 +82,13 @@ export const InputContainer = styled.div`
     label {
         font-size: 18px;
         font-weight: 600;
-        color: #FFF;
+        color: ${(props) => props.theme.white};
     }
 
     p {
         font-size: 14px;
         line-height: 80%;
-        color: #CF3057;
+        color: ${(props) => props.theme.darkRed};
         font-weight: 600;
         height: 10px;
     }
@@ -96,5 +96,5 @@ export const InputContainer = styled.div`
 
 export const Link = styled(ReactLink)`
     text-decoration: none;
-    color: #FFF;
+    color: ${(props) => props.theme.white};
 `;
